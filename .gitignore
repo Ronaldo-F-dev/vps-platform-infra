@@ -1,0 +1,6 @@
+# Jamais de secrets dans Git
+*.key
+*.pem
+.env
+vault-password*
+*.retry
