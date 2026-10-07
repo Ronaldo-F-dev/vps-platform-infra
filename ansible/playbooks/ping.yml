@@ -1,0 +1,8 @@
+# Premier test : Ansible arrive-t-il à parler au serveur ? (ne modifie rien)
+- name: Test de connexion
+  hosts: vps
+  gather_facts: true
+  tasks:
+    - name: Afficher l'OS et la RAM vus par Ansible
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}, RAM {{ ansible_facts['memtotal_mb'] }} Mo"
