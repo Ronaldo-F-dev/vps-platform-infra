@@ -7,3 +7,7 @@ firewall_allowed_ports:
 # Ports à supprimer s'ils existent (règles héritées sans raison d'être).
 firewall_removed_ports:
   - { port: "434", proto: tcp }
+
+# Profils d'application UFW à supprimer : doublons de nos règles explicites (ex. OpenSSH = 22/tcp).
+firewall_removed_profiles:
+  - OpenSSH
