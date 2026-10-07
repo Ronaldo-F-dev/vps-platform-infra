@@ -1,0 +1,9 @@
+# Ports autorisés en entrée. Tout le reste est refusé.
+firewall_allowed_ports:
+  - { port: "22",  proto: tcp, comment: "SSH administration" }
+  - { port: "80",  proto: tcp, comment: "HTTP (ingress futur, ACME)" }
+  - { port: "443", proto: tcp, comment: "HTTPS (ingress futur)" }
+
+# Ports à supprimer s'ils existent (règles héritées sans raison d'être).
+firewall_removed_ports:
+  - { port: "434", proto: tcp }
