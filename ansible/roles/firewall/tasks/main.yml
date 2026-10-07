@@ -20,6 +20,13 @@
     delete: true
   loop: "{{ firewall_removed_ports }}"
 
+- name: Remove legacy application profile rules
+  community.general.ufw:
+    rule: allow
+    name: "{{ item }}"
+    delete: true
+  loop: "{{ firewall_removed_profiles }}"
+
 - name: Deny all incoming traffic by default
   community.general.ufw:
     default: deny
