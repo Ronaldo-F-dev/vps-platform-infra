@@ -1,0 +1,17 @@
+# Démo d'idempotence : sans sudo, dans le dossier personnel de ronaldo uniquement.
+# 1er lancement : changed > 0 (il crée). 2e lancement : changed=0 (rien à faire).
+- name: Idempotence demo
+  hosts: vps
+  gather_facts: false
+  tasks:
+    - name: Ensure the demo directory exists
+      ansible.builtin.file:
+        path: /home/ronaldo/ansible-demo
+        state: directory
+        mode: "0755"
+
+    - name: Ensure the demo file has the expected content
+      ansible.builtin.copy:
+        dest: /home/ronaldo/ansible-demo/hello.txt
+        content: "Hello from Ansible\n"
+        mode: "0644"
