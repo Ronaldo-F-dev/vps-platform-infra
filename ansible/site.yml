@@ -1,0 +1,6 @@
+# Point d'entrée : applique tous les rôles du socle sur le VPS.
+- name: Host foundation
+  hosts: vps
+  become: true
+  roles:
+    - firewall
