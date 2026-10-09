@@ -1,0 +1,12 @@
+# Paquets de base qui doivent être présents.
+updates_packages:
+  - unattended-upgrades
+  - needrestart
+  - curl
+  - git
+  - jq
+  - htop
+
+# Pas de reboot automatique : le serveur n'a pas de console de secours.
+# Un reboot se décide à la main (voir docs, procédure de patch).
+updates_automatic_reboot: "false"
