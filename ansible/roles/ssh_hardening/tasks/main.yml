@@ -1,0 +1,11 @@
+# validate : sshd -t teste le fichier AVANT de l'installer. Une config cassée n'est jamais écrite,
+# donc le rechargement ne peut pas nous enfermer dehors.
+- name: Install the sshd hardening drop-in
+  ansible.builtin.template:
+    src: 10-hardening.conf.j2
+    dest: /etc/ssh/sshd_config.d/10-hardening.conf
+    owner: root
+    group: root
+    mode: "0644"
+    validate: /usr/sbin/sshd -t -f %s
+  notify: Reload sshd
