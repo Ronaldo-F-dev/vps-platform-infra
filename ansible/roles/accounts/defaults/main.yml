@@ -1,0 +1,7 @@
+# Compte d'administration non-root. Les clés ci-dessous sont PUBLIQUES (sans danger dans Git).
+admin_user: ronaldo
+admin_authorized_keys:
+  - name: main
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuuiRwwIwIrACqh9+R8QTJ3hhh8d47yxpZ8g0dPd79w ronaldo.awademe@epitech.eu"
+  - name: breakglass
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDtj7egkx/fJV1FIP4eZUBh8QexIVMwvvEN/3DKv5x1 ronaldo breakglass"
