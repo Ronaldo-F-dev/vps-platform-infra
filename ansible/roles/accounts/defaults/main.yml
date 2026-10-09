@@ -7,3 +7,5 @@ admin_authorized_keys:
     key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDtj7egkx/fJV1FIP4eZUBh8QexIVMwvvEN/3DKv5x1 ronaldo breakglass"
   - name: other-computer-kSsgWg
     key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDf5faoEAYuss6EvbmX1DpJrVA83tHGO3ebjpYsrd/Ne ronaldo.awademe@epitech.eu"
+  - name: other-computer-1KCvW5
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWHoC7P6ASxhtrRMnYP2uiDcO3RmXHQOXzOb2ga5Tos ronaldo.awademe@epitech.eu"
