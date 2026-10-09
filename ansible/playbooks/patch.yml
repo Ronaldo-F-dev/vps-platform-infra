@@ -1,0 +1,26 @@
+# Patch manuel : à lancer volontairement, jamais en automatique.
+#   ansible-playbook playbooks/patch.yml -K
+# Ne redémarre JAMAIS le serveur : il signale seulement si un reboot est nécessaire.
+- name: Apply all pending package updates
+  hosts: vps
+  become: true
+  tasks:
+    - name: Update the package index and upgrade all packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+      register: patch_result
+
+    - name: Show what changed
+      ansible.builtin.debug:
+        msg: "{{ patch_result.stdout_lines | default([]) | select('match', '^(Inst|Remv)') | list }}"
+
+    - name: Check whether a reboot is pending
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: patch_reboot
+
+    - name: Report pending reboot
+      ansible.builtin.debug:
+        msg: "REBOOT EN ATTENTE : à planifier à la main (voir la procédure de patch)."
+      when: patch_reboot.stat.exists
