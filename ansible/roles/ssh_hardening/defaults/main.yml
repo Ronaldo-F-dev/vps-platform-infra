@@ -1,0 +1,8 @@
+# Options sshd appliquées via un fichier drop-in. Format : option sshd -> valeur.
+sshd_hardening_options:
+  PermitRootLogin: "no"
+  PasswordAuthentication: "no"
+  KbdInteractiveAuthentication: "no"
+  X11Forwarding: "no"
+  MaxAuthTries: "3"
+  LoginGraceTime: "30"
