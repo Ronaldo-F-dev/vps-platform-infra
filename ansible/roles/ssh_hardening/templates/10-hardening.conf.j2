@@ -1,0 +1,5 @@
+# Managed by Ansible (role ssh_hardening). Do not edit by hand.
+# Chargé avant 50-cloud-init.conf et 60-cloudimg-settings.conf : avec sshd, la première valeur lue gagne.
+{% for option, value in sshd_hardening_options.items() %}
+{{ option }} {{ value }}
+{% endfor %}
