@@ -28,6 +28,11 @@ Jamais vues dans les logs conservés (quelques semaines seulement). Retrait repo
 l'administrateur (2026-10-09). Le rôle `accounts` utilise `exclusive: false` : il n'enlève aucune clé.
 Risque assumé : deux accès non identifiés restent valides.
 
+Précision du 2026-10-09 : l'administrateur indique n'avoir jamais eu de projet Symfony. La clé `symfony`
+n'est donc PAS la sienne (propriétaire inconnu). Elle peut appartenir à un formateur ou à un précédent
+utilisateur du serveur. A clarifier avec la formation avant tout retrait, car la supprimer pourrait
+couper l'accès de quelqu'un de légitime. La même question reste ouverte pour la clé `github`.
+
 ## Autre compte
 - `ubuntu` (uid 1000, groupe `sudo`) : compte par défaut de l'image, jamais utilisé depuis le 2026-07-13.
   Clés et droits `sudo` non lisibles par `ronaldo`. A clarifier avec la formation avant toute action.
