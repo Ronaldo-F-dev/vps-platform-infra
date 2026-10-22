@@ -1,0 +1,8 @@
+# Journaux : conservés sur disque (survivent au reboot) mais plafonnés.
+journald_system_max_use: 500M
+journald_max_retention: 1month
+
+# Contrôle de santé de l'hôte (exécuté par un timer systemd, écrit dans le journal).
+healthcheck_disk_warn_percent: 80
+healthcheck_mem_warn_percent: 85
+healthcheck_interval: 15min

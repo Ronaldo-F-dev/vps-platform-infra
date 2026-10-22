@@ -1,0 +1,21 @@
+#!/bin/bash
+# Managed by Ansible (role host_monitoring).
+# Écrit dans le journal : "journalctl -t host-healthcheck". Code de sortie 1 si un seuil est dépassé.
+set -u
+status=0
+warn() { logger -t host-healthcheck -p user.warning "WARN: $*"; echo "WARN: $*"; status=1; }
+info() { logger -t host-healthcheck -p user.info "OK: $*"; echo "OK: $*"; }
+
+disk=$(df --output=pcent / | tail -1 | tr -dc '0-9')
+if [ "$disk" -ge {{ healthcheck_disk_warn_percent }} ]; then warn "disque / à ${disk}%"; else info "disque / à ${disk}%"; fi
+
+mem=$(free | awk '/^Mem:/ {printf "%d", ($2-$7)*100/$2}')
+if [ "$mem" -ge {{ healthcheck_mem_warn_percent }} ]; then warn "mémoire utilisée à ${mem}%"; else info "mémoire utilisée à ${mem}%"; fi
+
+failed=$(systemctl --failed --no-legend | wc -l)
+if [ "$failed" -gt 0 ]; then warn "${failed} unité(s) systemd en échec"; else info "aucune unité en échec"; fi
+
+if [ -f /var/run/reboot-required ]; then warn "reboot en attente"; else info "pas de reboot en attente"; fi
+
+ufw status | head -1 | grep -q "active" && info "ufw actif" || warn "ufw inactif"
+exit $status
