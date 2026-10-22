@@ -1,0 +1,37 @@
+# Copie hors VPS (vers le poste d'administration) de la configuration qui n'est PAS dans Git.
+#   ansible-playbook playbooks/backup-config.yml -K
+# Résultat : ../backups/<date>/ (dossier ignoré par Git, à copier ensuite hors du Mac aussi).
+- name: Fetch host configuration off the VPS
+  hosts: vps
+  become: true
+  gather_facts: false
+  vars:
+    backup_stamp: "{{ lookup('pipe', 'date +%Y-%m-%d') }}"
+    backup_files:
+      - /etc/ssh/sshd_config.d/10-hardening.conf
+      - /etc/fail2ban/jail.d/10-sshd.local
+      - /etc/apt/apt.conf.d/20auto-upgrades
+      - /etc/apt/apt.conf.d/52platform-unattended.conf
+      - /etc/systemd/journald.conf.d/10-platform.conf
+      - /home/ronaldo/.ssh/authorized_keys
+      - /etc/ssh/ssh_host_ed25519_key.pub
+  tasks:
+    - name: Dump the ufw rules
+      ansible.builtin.command: ufw status numbered
+      register: backup_ufw
+      changed_when: false
+
+    - name: Save the ufw rules locally
+      ansible.builtin.copy:
+        content: "{{ backup_ufw.stdout }}\n"
+        dest: "{{ playbook_dir }}/../../backups/{{ backup_stamp }}/ufw-status.txt"
+        mode: "0600"
+      delegate_to: localhost
+      become: false
+
+    - name: Fetch configuration files
+      ansible.builtin.fetch:
+        src: "{{ item }}"
+        dest: "{{ playbook_dir }}/../../backups/{{ backup_stamp }}/"
+        flat: false
+      loop: "{{ backup_files }}"

@@ -4,3 +4,6 @@
 .env
 vault-password*
 *.retry
+
+# Copies de configuration hors VPS (peuvent contenir des infos sensibles)
+backups/
