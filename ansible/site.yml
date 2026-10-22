@@ -7,3 +7,5 @@
     - ssh_hardening
     - accounts
     - updates
+    - fail2ban
+    - host_monitoring
