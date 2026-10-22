@@ -1,0 +1,6 @@
+# Jail sshd : bannit une IP après trop d'échecs d'authentification.
+fail2ban_maxretry: 5
+fail2ban_findtime: 10m
+fail2ban_bantime: 1h
+# IP jamais bannies (localhost). Ne PAS y mettre l'IP de l'admin : elle change (voir KI-001).
+fail2ban_ignoreip: "127.0.0.1/8 ::1"
