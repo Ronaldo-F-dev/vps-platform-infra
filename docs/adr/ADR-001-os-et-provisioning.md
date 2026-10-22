@@ -1,6 +1,6 @@
 # ADR-001 - Choix de l'OS et stratégie de provisioning du VPS
 
-- Statut : proposé
+- Statut : accepté (2026-10-22)
 - Date : 2026-10-07
 
 ## Contexte
@@ -22,4 +22,8 @@ PostgreSQL) supprimés le 2026-10-07 : état de départ propre, RAM 0,8 Go utili
 - Les écarts connus (disque, règle UFW 434, groupe docker) sont à traiter dans le Projet 1.
 
 ## Preuves
-- À compléter : playbook rejoué sans changement, snapshot de départ.
+- Playbook `site.yml` : `ansible-playbook site.yml` rejoué, résultat attendu `changed=0` (voir `test-log.md`).
+- Amorce cloud-init : `cloud-init/user-data.yml`.
+- Pas de snapshot de départ : l'hébergeur n'en fournit pas (contrainte de la formation). Compensation : export de
+  configuration hors VPS (ADR-010) et reconstruction documentée (`runbook-rebuild.md`).
+- Disque : 96 Go constatés au lieu de 200 Go annoncés. Le budget de capacité du Projet 2 part de 96 Go.
