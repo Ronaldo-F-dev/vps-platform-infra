@@ -1,0 +1,78 @@
+# Contrôles en lecture seule : produit les preuves du Projet 1 (à consigner dans docs/test-log.md).
+#   ansible-playbook playbooks/verify.yml -K
+- name: Verify the host foundation
+  hosts: vps
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Read the effective sshd configuration
+      ansible.builtin.command: /usr/sbin/sshd -T
+      register: verify_sshd
+      changed_when: false
+
+    - name: Assert SSH hardening is effective
+      ansible.builtin.assert:
+        that:
+          - "'permitrootlogin no' in verify_sshd.stdout_lines"
+          - "'passwordauthentication no' in verify_sshd.stdout_lines"
+          - "'maxauthtries 3' in verify_sshd.stdout_lines"
+        success_msg: "SSH : root interdit, mot de passe interdit"
+
+    - name: Read ufw status
+      ansible.builtin.command: ufw status verbose
+      register: verify_ufw
+      changed_when: false
+
+    - name: Assert ufw is active with default deny incoming
+      ansible.builtin.assert:
+        that:
+          - "'Status: active' in verify_ufw.stdout"
+          - "'deny (incoming)' in verify_ufw.stdout"
+        success_msg: "UFW actif, entrée refusée par défaut"
+
+    - name: Gather listening TCP sockets
+      ansible.builtin.command: ss -tlnH
+      register: verify_ports
+      changed_when: false
+
+    - name: Show listening sockets (compare with docs/ports-matrix.md)
+      ansible.builtin.debug:
+        var: verify_ports.stdout_lines
+
+    - name: Check the fail2ban sshd jail
+      ansible.builtin.command: fail2ban-client status sshd
+      register: verify_f2b
+      changed_when: false
+
+    - name: Check unattended-upgrades configuration
+      ansible.builtin.command: apt-config dump APT::Periodic::Unattended-Upgrade Unattended-Upgrade::Automatic-Reboot
+      register: verify_upg
+      changed_when: false
+
+    - name: Show fail2ban and unattended-upgrades state
+      ansible.builtin.debug:
+        msg: "{{ verify_f2b.stdout_lines + verify_upg.stdout_lines }}"
+
+    - name: Check the healthcheck timer
+      ansible.builtin.command: systemctl is-active host-healthcheck.timer
+      register: verify_timer
+      changed_when: false
+
+    - name: Run the healthcheck once
+      ansible.builtin.command: /usr/local/bin/host-healthcheck
+      register: verify_hc
+      changed_when: false
+      failed_when: false
+
+    - name: Show healthcheck result
+      ansible.builtin.debug:
+        msg: "{{ verify_hc.stdout_lines }}"
+
+    - name: List running services (each must be justified, see ADR-010)
+      ansible.builtin.command: systemctl list-units --type=service --state=running --no-legend
+      register: verify_services
+      changed_when: false
+
+    - name: Show running services
+      ansible.builtin.debug:
+        var: verify_services.stdout_lines
