@@ -1,6 +1,6 @@
 # ADR-002 - K3s mono-noeud : limites, datastore et stratégie de sauvegarde
 
-- Statut : proposé (à confirmer au démarrage du Projet 2)
+- Statut : accepté (2026-11-14)
 - Date : 2026-10-22
 
 ## Contexte
