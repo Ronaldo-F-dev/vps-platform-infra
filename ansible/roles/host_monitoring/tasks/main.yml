@@ -7,6 +7,14 @@
     mode: "2755"
   notify: Restart journald
 
+- name: Ensure the journald drop-in directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Install the journald limits drop-in
   ansible.builtin.template:
     src: journald-platform.conf.j2
