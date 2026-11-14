@@ -8,7 +8,9 @@ Un seul VPS (6 vCPU, ~11 Go de RAM, 96 Go de disque, sans console ni snapshot h�
 après validation du socle hôte (Projet 1).
 
 ## Décision
-- K3s natif, un seul noeud (serveur + agent). La version exacte sera relevée et inscrite ici à l'installation.
+- K3s natif, un seul noeud (serveur + agent), installé par le rôle Ansible `k3s`.
+- Version cible épinglée dans `ansible/roles/k3s/defaults/main.yml` (`k3s_version`). La version réellement
+  installée sera relevée par `playbooks/k3s-verify.yml` et inscrite dans la section Preuves.
 - Datastore : SQLite embarqué (défaut K3s mono-noeud). Pas d'etcd ni de base externe : inutile sans HA.
 - Stockage : `local-path` (volumes sur le disque du VPS). Pas de stockage distribué.
 - Addons limités au nécessaire ; chaque composant permanent doit avoir un propriétaire, une limite de
