@@ -21,3 +21,12 @@ faire respecter. Hôte : 6 vCPU, ~11 Go de RAM, budget « K3s et composants syst
   « Réseau Cilium » sur k3d.
 - Calico : même coût de complexité sans besoin démontré à ce stade.
 - Aucune policy : incompatible avec l'objectif d'une séparation logique visible entre environnements.
+
+## Conséquences
+- Coût mémoire : aucun agent supplémentaire, le contrôleur de policies tourne dans le processus K3s.
+- Pas de visibilité réseau fine ni de policies L7 : limite assumée, traitée en lab.
+- Les policies posées par défaut sont en entrée uniquement (`default-deny-ingress`). La sortie reste
+  ouverte pour ne pas casser DNS, ACME et le pull d'images ; à durcir plus tard, case par case.
+
+## Preuves
+- À compléter : sortie de `scripts/test-networkpolicy.sh` (flux dev -> prod refusé, ingress -> prod autorisé).
