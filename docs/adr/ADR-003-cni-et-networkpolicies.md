@@ -14,3 +14,10 @@ faire respecter. Hôte : 6 vCPU, ~11 Go de RAM, budget « K3s et composants syst
   sait pas le faire.
 - Aucune option de désactivation n'est ajoutée dans la configuration K3s (voir rôle `k3s`).
 - L'enforcement n'est considéré comme prouvé qu'après le test de flux bloqué puis autorisé.
+
+## Alternatives écartées
+- Cilium sur la plateforme durable : visibilité réseau (Hubble) et policies L7, mais agent + opérateur
+  coûteux en RAM sur un noeud de 11 Go et remplacement de Flannel à l'installation. Réservé au lab
+  « Réseau Cilium » sur k3d.
+- Calico : même coût de complexité sans besoin démontré à ce stade.
+- Aucune policy : incompatible avec l'objectif d'une séparation logique visible entre environnements.
