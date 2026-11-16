@@ -12,6 +12,9 @@ après validation du socle hôte (Projet 1).
 - Version cible épinglée dans `ansible/roles/k3s/defaults/main.yml` (`k3s_version`). La version réellement
   installée sera relevée par `playbooks/k3s-verify.yml` et inscrite dans la section Preuves.
 - Datastore : SQLite embarqué (défaut K3s mono-noeud). Pas d'etcd ni de base externe : inutile sans HA.
+- Exposition de l'API : le port 6443 n'est PAS ouvert sur Internet (UFW l'ignore). L'accès à l'API se fait
+  par tunnel SSH ou `sudo k3s kubectl` sur l'hôte.
+- Secrets Kubernetes chiffrés au repos dans le datastore (`secrets-encryption`).
 - Stockage : `local-path` (volumes sur le disque du VPS). Pas de stockage distribué.
 - Addons limités au nécessaire ; chaque composant permanent doit avoir un propriétaire, une limite de
   ressources et une procédure de retrait.
