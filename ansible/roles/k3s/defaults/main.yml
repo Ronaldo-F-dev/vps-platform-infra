@@ -10,3 +10,13 @@ k3s_install_script_path: /usr/local/sbin/k3s-install.sh
 k3s_config_dir: /etc/rancher/k3s
 k3s_node_name: "{{ inventory_hostname }}"
 k3s_write_kubeconfig_mode: "0600"
+
+# Secrets Kubernetes chiffrés au repos dans le datastore SQLite (ADR-002).
+k3s_secrets_encryption: true
+
+# SAN supplémentaires du certificat de l'API (vide : 127.0.0.1 et l'IP du noeud suffisent).
+k3s_tls_san: []
+
+# Composants packagés à désactiver. Vide : on garde Traefik (ingress), servicelb, local-path et
+# metrics-server, utiles aux projets suivants. Ne rien désactiver sans suivre le runbook de retrait.
+k3s_disable: []
