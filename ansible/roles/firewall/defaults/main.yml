@@ -11,3 +11,9 @@ firewall_removed_ports:
 # Profils d'application UFW à supprimer : doublons de nos règles explicites (ex. OpenSSH = 22/tcp).
 firewall_removed_profiles:
   - OpenSSH
+
+# Réseaux autorisés à entrer : pods et services K3s (CIDR par défaut). Sans cela, UFW coupe le trafic
+# pod -> API et pod -> pod. Le port 6443 reste fermé à Internet. Voir ADR-009.
+firewall_allowed_sources:
+  - { src: "10.42.0.0/16", comment: "K3s pod network" }
+  - { src: "10.43.0.0/16", comment: "K3s service network" }
