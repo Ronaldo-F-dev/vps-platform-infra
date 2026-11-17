@@ -16,3 +16,19 @@ Règle : on ne coche que ce qui a été exécuté. Les lignes « À exécuter »
 | Syntaxe de `site.yml`, `verify.yml`, `backup-config.yml` | `--syntax-check` OK | OK | 2026-10-22 |
 | Test de reconstruction sur un VPS neuf | socle reproduit | Non réalisé (pas de second serveur) | Écart assumé |
 | Snapshot de départ | image restaurable | Impossible (contrainte formation) | Écart assumé, voir ADR-010 |
+
+# Journal des tests du Projet 2
+
+Écrit sans accès au VPS (injoignable). Aucune ligne n'est cochée : tout reste à exécuter.
+
+| Test | Résultat attendu | Statut | Date / preuve |
+|---|---|---|---|
+| Syntaxe de `platform.yml`, `k3s-verify.yml`, `k3s-backup.yml` | `--syntax-check` OK | À exécuter | |
+| Installation K3s + 2e passage | 1er : changes ; 2e : `changed=0` | Écrit, **pas appliqué** | À exécuter |
+| Santé du cluster | `k3s-verify.yml` sans assertion en échec | À exécuter | |
+| Aucun port inattendu depuis Internet | scan externe : 22, 80, 443 seulement | À exécuter | |
+| Application minimale en HTTPS dans dev, staging, prod | `curl -I https://whoami.<env>.<base>` -> 200 | À exécuter | |
+| Charge au-dessus du quota refusée | `scripts/test-quota.sh` : « exceeded quota » | À exécuter | |
+| Compte de service sans accès inter-namespace | `scripts/verify-rbac.sh` sans échec | À exécuter | |
+| NetworkPolicy effective (ADR-003) | `scripts/test-networkpolicy.sh` : dev -> prod bloqué | À exécuter | |
+| Sauvegarde à froid du datastore | archive récupérée dans `backups/` | À exécuter | |
