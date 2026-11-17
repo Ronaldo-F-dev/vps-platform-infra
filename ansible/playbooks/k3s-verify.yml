@@ -68,3 +68,14 @@
         that:
           - verify_k3s_kubeconfig.stat.mode == '0600'
         success_msg: "kubeconfig en 0600"
+
+    - name: Read ufw status
+      ansible.builtin.command: ufw status
+      register: verify_k3s_ufw
+      changed_when: false
+
+    - name: Assert that the Kubernetes API port is not opened in ufw
+      ansible.builtin.assert:
+        that:
+          - "'6443' not in verify_k3s_ufw.stdout"
+        success_msg: "6443 absent des règles UFW (confirmer par un scan externe, ADR-009)"
