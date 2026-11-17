@@ -1,0 +1,3 @@
+# Version EXACTE de K3s (ADR-002). Jamais de canal flottant (stable, latest) : la plateforme doit
+# pouvoir être reconstruite à l'identique. Changer cette valeur = montée de version (voir runbook).
+k3s_version: "v1.31.4+k3s1"
