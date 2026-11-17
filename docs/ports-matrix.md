@@ -11,6 +11,10 @@ Politique par défaut : entrée refusée, sortie autorisée. Les règles sont g�
 | 443  | TCP | Traefik (K3s), à vérifier après installation | Internet (IPv4 + IPv6) | Réservé à l'ingress HTTPS (Projet 2) | Ouvert d'avance, à refermer si inutilisé |
 | 6443 | TCP | k3s (API Kubernetes) | Localhost et réseaux K3s uniquement | Pas d'exposition Internet : tunnel SSH | Fermé par UFW, à confirmer par scan externe |
 
+## Réseaux internes K3s
+Autorisés en entrée par le rôle `firewall` (`firewall_allowed_sources`) : 10.42.0.0/16 (pods) et
+10.43.0.0/16 (services). Ils ne sont pas routés depuis Internet.
+
 ## Historique
 - 434/tcp : supprimé (aucune raison d'être, faute de frappe probable de 443).
 - Profil `OpenSSH` : supprimé (doublon de 22/tcp).
