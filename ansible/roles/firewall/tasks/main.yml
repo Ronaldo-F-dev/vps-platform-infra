@@ -12,6 +12,13 @@
     comment: "{{ item.comment }}"
   loop: "{{ firewall_allowed_ports }}"
 
+- name: Allow the declared source networks
+  community.general.ufw:
+    rule: allow
+    src: "{{ item.src }}"
+    comment: "{{ item.comment }}"
+  loop: "{{ firewall_allowed_sources }}"
+
 - name: Remove legacy rules
   community.general.ufw:
     rule: allow
