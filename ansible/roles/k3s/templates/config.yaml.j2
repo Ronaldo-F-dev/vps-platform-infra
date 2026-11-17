@@ -2,3 +2,9 @@
 node-name: {{ k3s_node_name }}
 write-kubeconfig-mode: "{{ k3s_write_kubeconfig_mode }}"
 secrets-encryption: {{ k3s_secrets_encryption | bool | lower }}
+{% if k3s_tls_san %}
+tls-san:
+{% for san in k3s_tls_san %}
+  - {{ san }}
+{% endfor %}
+{% endif %}
