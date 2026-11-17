@@ -5,3 +5,13 @@
     owner: root
     group: root
     mode: "0755"
+
+# La configuration est posée AVANT l'installation : K3s démarre directement avec les bonnes options.
+- name: Render the K3s configuration
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: "{{ k3s_config_dir }}/config.yaml"
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Restart k3s
