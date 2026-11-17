@@ -1,0 +1,9 @@
+# Le checksum publié par le projet Helm est vérifié avant toute extraction.
+- name: Download the Helm archive with checksum verification
+  ansible.builtin.get_url:
+    url: "{{ helm_base_url }}/helm-{{ helm_version }}-linux-{{ helm_arch }}.tar.gz"
+    dest: "{{ helm_archive_dir }}/helm-{{ helm_version }}-linux-{{ helm_arch }}.tar.gz"
+    checksum: "sha256:{{ helm_base_url }}/helm-{{ helm_version }}-linux-{{ helm_arch }}.tar.gz.sha256sum"
+    owner: root
+    group: root
+    mode: "0644"
