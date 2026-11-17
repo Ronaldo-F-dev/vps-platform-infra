@@ -1,0 +1,18 @@
+# Sauvegarde À FROID du datastore K3s (SQLite) vers le poste d'administration.
+#   ansible-playbook playbooks/k3s-backup.yml -K
+# K3s est arrêté pendant l'archivage (quelques secondes) : l'API est indisponible, mais les conteneurs
+# déjà lancés continuent de tourner. Résultat : ../backups/<date>/k3s/ (ignoré par Git, contient des secrets :
+# à stocker chiffré, voir ADR-010).
+- name: Cold backup of the K3s datastore
+  hosts: vps
+  become: true
+  gather_facts: false
+  vars:
+    k3s_backup_stamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H%M') }}"
+    k3s_backup_archive: "/var/backups/k3s-{{ k3s_backup_stamp }}.tar.gz"
+    k3s_backup_paths:
+      - /var/lib/rancher/k3s/server/db
+      - /var/lib/rancher/k3s/server/token
+      - /var/lib/rancher/k3s/server/tls
+      - /var/lib/rancher/k3s/server/cred
+      - /etc/rancher/k3s/config.yaml
