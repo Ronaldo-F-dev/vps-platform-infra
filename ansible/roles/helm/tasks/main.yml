@@ -22,3 +22,9 @@
     dest: "{{ helm_install_dir }}"
     remote_src: true
     creates: "{{ helm_install_dir }}/linux-{{ helm_arch }}/helm"
+
+- name: Point the helm command at the pinned version
+  ansible.builtin.file:
+    src: "{{ helm_install_dir }}/linux-{{ helm_arch }}/helm"
+    dest: "{{ helm_bin }}"
+    state: link
