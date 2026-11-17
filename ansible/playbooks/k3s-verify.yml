@@ -1,0 +1,15 @@
+# Contrôles en lecture seule de K3s : produit les preuves du Projet 2 (à consigner dans docs/test-log.md).
+#   ansible-playbook playbooks/k3s-verify.yml -K
+- name: Verify the K3s platform
+  hosts: vps
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Read the installed K3s version
+      ansible.builtin.command: /usr/local/bin/k3s --version
+      register: verify_k3s_version
+      changed_when: false
+
+    - name: Show the exact version (to record in ADR-002)
+      ansible.builtin.debug:
+        var: verify_k3s_version.stdout_lines
