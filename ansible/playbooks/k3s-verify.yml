@@ -19,3 +19,16 @@
       register: verify_k3s_active
       changed_when: false
       failed_when: verify_k3s_active.stdout != 'active'
+
+    - name: Read the Ready condition of the node
+      ansible.builtin.command: >-
+        /usr/local/bin/k3s kubectl get nodes
+        -o jsonpath='{.items[*].status.conditions[?(@.type=="Ready")].status}'
+      register: verify_k3s_ready
+      changed_when: false
+
+    - name: Assert the single node is Ready
+      ansible.builtin.assert:
+        that:
+          - verify_k3s_ready.stdout == 'True'
+        success_msg: "Noeud K3s Ready"
