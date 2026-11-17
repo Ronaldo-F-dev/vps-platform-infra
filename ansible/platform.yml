@@ -1,0 +1,9 @@
+# Point d'entrée du Projet 2 : Helm puis K3s.
+# À lancer seulement après site.yml appliqué et playbooks/verify.yml sans erreur (K3s vient après le socle).
+# Garder une seconde session SSH ouverte.
+- name: Kubernetes platform
+  hosts: vps
+  become: true
+  roles:
+    - helm
+    - k3s
