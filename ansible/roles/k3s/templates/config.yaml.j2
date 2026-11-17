@@ -8,3 +8,9 @@ tls-san:
   - {{ san }}
 {% endfor %}
 {% endif %}
+{% if k3s_disable %}
+disable:
+{% for component in k3s_disable %}
+  - {{ component }}
+{% endfor %}
+{% endif %}
