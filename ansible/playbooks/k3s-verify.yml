@@ -13,3 +13,9 @@
     - name: Show the exact version (to record in ADR-002)
       ansible.builtin.debug:
         var: verify_k3s_version.stdout_lines
+
+    - name: Read the state of the k3s service
+      ansible.builtin.command: systemctl is-active k3s
+      register: verify_k3s_active
+      changed_when: false
+      failed_when: verify_k3s_active.stdout != 'active'
