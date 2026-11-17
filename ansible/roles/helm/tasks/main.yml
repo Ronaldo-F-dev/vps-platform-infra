@@ -15,3 +15,10 @@
     owner: root
     group: root
     mode: "0755"
+
+- name: Extract the Helm archive
+  ansible.builtin.unarchive:
+    src: "{{ helm_archive_dir }}/helm-{{ helm_version }}-linux-{{ helm_arch }}.tar.gz"
+    dest: "{{ helm_install_dir }}"
+    remote_src: true
+    creates: "{{ helm_install_dir }}/linux-{{ helm_arch }}/helm"
