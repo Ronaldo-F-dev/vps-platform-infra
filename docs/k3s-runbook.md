@@ -29,3 +29,14 @@ une seconde session SSH ouverte.
   retirer le fichier du dépôt. Les CRD sont conservées (`keep: true`) : les supprimer explicitement si
   le retrait est définitif, après avoir vérifié qu'aucun `Certificate` n'existe.
 - Mettre à jour `docs/ports-matrix.md` et l'ADR concerné.
+
+## 4. Vérification de santé
+```bash
+ansible-playbook playbooks/k3s-verify.yml -K     # preuves et assertions
+sudo k3s kubectl get nodes,pods -A               # état général
+sudo k3s kubectl top nodes                       # consommation (metrics-server)
+sudo journalctl -u k3s --since "1 hour ago"      # journal du service
+df -h /var/lib/rancher                           # disque : alerte avant saturation
+sudo k3s kubectl get certificate -A              # certificats prêts et échéances
+```
+Conserver 20 à 25 % de RAM libre (document maître) : `free -h` et `host-healthcheck`.
