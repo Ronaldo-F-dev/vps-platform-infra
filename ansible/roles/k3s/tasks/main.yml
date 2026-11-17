@@ -23,3 +23,9 @@
     owner: root
     group: root
     mode: "0755"
+
+- name: Read the installed K3s version
+  ansible.builtin.command: /usr/local/bin/k3s --version
+  register: k3s_installed
+  changed_when: false
+  failed_when: false
