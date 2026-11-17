@@ -37,3 +37,14 @@
           ansible.builtin.systemd:
             name: k3s
             state: started
+
+    - name: Fetch the archive to the admin workstation
+      ansible.builtin.fetch:
+        src: "{{ k3s_backup_archive }}"
+        dest: "{{ playbook_dir }}/../../backups/{{ k3s_backup_stamp }}/k3s/"
+        flat: true
+
+    - name: Remove the archive from the VPS
+      ansible.builtin.file:
+        path: "{{ k3s_backup_archive }}"
+        state: absent
