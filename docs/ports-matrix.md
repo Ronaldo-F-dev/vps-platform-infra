@@ -7,7 +7,7 @@ Politique par défaut : entrée refusée, sortie autorisée. Les règles sont g�
 | Port | Protocole | Programme | Ouvert à | Raison | Statut |
 |------|-----------|-----------|----------|--------|--------|
 | 22   | TCP | sshd | Internet (IPv4 + IPv6) | Administration, clé SSH uniquement, root interdit | Voulu |
-| 80   | TCP | (aucun pour l'instant) | Internet (IPv4 + IPv6) | Réservé à l'ingress et à ACME (Projet 2) | Ouvert d'avance, à refermer si inutilisé |
+| 80   | TCP | Traefik (K3s), à vérifier après installation | Internet (IPv4 + IPv6) | Réservé à l'ingress et à ACME (Projet 2) | Ouvert d'avance, à refermer si inutilisé |
 | 443  | TCP | (aucun pour l'instant) | Internet (IPv4 + IPv6) | Réservé à l'ingress HTTPS (Projet 2) | Ouvert d'avance, à refermer si inutilisé |
 
 ## Historique
