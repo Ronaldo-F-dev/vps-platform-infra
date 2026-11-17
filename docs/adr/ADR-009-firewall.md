@@ -6,6 +6,8 @@
 ## Décision
 - UFW, entrée refusée par défaut, sortie autorisée, géré uniquement par le rôle `firewall`.
 - Ports ouverts : 22 (SSH), 80 et 443 (ingress K3s, ACME), cf. `ports-matrix.md`.
+- Réseaux internes K3s (10.42.0.0/16 pods, 10.43.0.0/16 services) autorisés en entrée : sans eux UFW coupe
+  le trafic pod -> API. Le port 6443 n'est volontairement pas ouvert (accès par tunnel SSH).
 - Les règles `allow` sont posées AVANT l'activation d'UFW pour ne jamais se couper de SSH.
 - Règles héritées supprimées : 434/tcp (faute de frappe) et profil `OpenSSH` (doublon).
 
