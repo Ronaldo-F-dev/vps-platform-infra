@@ -79,3 +79,22 @@
         that:
           - "'6443' not in verify_k3s_ufw.stdout"
         success_msg: "6443 absent des règles UFW (confirmer par un scan externe, ADR-009)"
+
+    - name: Gather listening TCP sockets
+      ansible.builtin.command: ss -tlnH
+      register: verify_k3s_ports
+      changed_when: false
+
+    - name: Show listening sockets (compare with docs/ports-matrix.md)
+      ansible.builtin.debug:
+        var: verify_k3s_ports.stdout_lines
+
+    - name: Show node and pod consumption (metrics-server may need a minute after start)
+      ansible.builtin.command: /usr/local/bin/k3s kubectl top nodes
+      register: verify_k3s_top
+      changed_when: false
+      failed_when: false
+
+    - name: Show node consumption
+      ansible.builtin.debug:
+        var: verify_k3s_top.stdout_lines
