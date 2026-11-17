@@ -16,3 +16,24 @@
       - /var/lib/rancher/k3s/server/tls
       - /var/lib/rancher/k3s/server/cred
       - /etc/rancher/k3s/config.yaml
+
+  tasks:
+    # always : K3s redémarre même si l'archivage échoue.
+    - name: Archive the datastore while k3s is stopped
+      block:
+        - name: Stop k3s
+          ansible.builtin.systemd:
+            name: k3s
+            state: stopped
+
+        - name: Create the archive
+          community.general.archive:
+            path: "{{ k3s_backup_paths }}"
+            dest: "{{ k3s_backup_archive }}"
+            format: gz
+            mode: "0600"
+      always:
+        - name: Start k3s again
+          ansible.builtin.systemd:
+            name: k3s
+            state: started
