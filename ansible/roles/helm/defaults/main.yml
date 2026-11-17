@@ -1,0 +1,4 @@
+# Version EXACTE du client Helm installé sur l'hôte (outil d'administration, pas un démon).
+helm_version: "v3.16.3"
+helm_arch: amd64
+helm_base_url: "https://get.helm.sh"
