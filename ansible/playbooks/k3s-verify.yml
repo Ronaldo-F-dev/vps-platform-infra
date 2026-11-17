@@ -32,3 +32,17 @@
         that:
           - verify_k3s_ready.stdout == 'True'
         success_msg: "Noeud K3s Ready"
+
+    - name: List pods that are neither Running nor Succeeded
+      ansible.builtin.command: >-
+        /usr/local/bin/k3s kubectl get pods -A --no-headers
+        --field-selector=status.phase!=Running,status.phase!=Succeeded
+      register: verify_k3s_bad_pods
+      changed_when: false
+
+    - name: Assert that every pod is healthy
+      ansible.builtin.assert:
+        that:
+          - verify_k3s_bad_pods.stdout | trim == ''
+        success_msg: "Tous les pods sont Running ou Succeeded"
+        fail_msg: "Pods en défaut : {{ verify_k3s_bad_pods.stdout }}"
