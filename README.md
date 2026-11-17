@@ -12,6 +12,7 @@ Fait partie du parcours DevOps Senior (Projet 1). K3s n'est installé qu'après 
 - `docs/runbook-rebuild.md` : reconstruction, patch, rollback
 - `docs/test-log.md` : preuves et tests du Projet 1
 - `docs/known-issues.md` : problèmes connus (KI-001)
+- `docs/k3s-runbook.md`, `docs/k3s-access.md`, `docs/storage.md` : K3s (Projet 2)
 
 ## Rôles Ansible
 `firewall`, `ssh_hardening`, `accounts`, `updates`, `fail2ban`, `host_monitoring` (tous dans `ansible/site.yml`).
