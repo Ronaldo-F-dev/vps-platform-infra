@@ -7,3 +7,11 @@
     owner: root
     group: root
     mode: "0644"
+
+- name: Ensure the versioned install directory exists
+  ansible.builtin.file:
+    path: "{{ helm_install_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
