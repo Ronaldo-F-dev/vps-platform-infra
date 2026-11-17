@@ -9,7 +9,8 @@
 5. Garder UNE SECONDE SESSION SSH OUVERTE, puis `ansible-playbook site.yml -K`.
 6. Relancer : le résultat doit être `changed=0` (idempotence).
 7. `ansible-playbook playbooks/verify.yml -K` et consigner le résultat dans `docs/test-log.md`.
-8. Ordre pour la suite (Projets 2+) : hôte -> K3s -> Argo CD / GitOps -> données restaurées -> DNS.
+8. Ordre de reconstruction : hôte (`site.yml`) -> K3s (`platform.yml`, voir `docs/k3s-runbook.md`) -> manifests
+   du dépôt GitOps (`docs/bootstrap.md`) -> Argo CD (Projet 3) -> données restaurées (Projet 6) -> DNS.
 
 ## 2. Procédure de patch
 - Automatique : `unattended-upgrades` applique les correctifs de sécurité, sans reboot.
