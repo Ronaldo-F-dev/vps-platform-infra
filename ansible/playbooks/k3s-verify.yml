@@ -46,3 +46,14 @@
           - verify_k3s_bad_pods.stdout | trim == ''
         success_msg: "Tous les pods sont Running ou Succeeded"
         fail_msg: "Pods en défaut : {{ verify_k3s_bad_pods.stdout }}"
+
+    - name: Read the secrets encryption status
+      ansible.builtin.command: /usr/local/bin/k3s secrets-encrypt status
+      register: verify_k3s_enc
+      changed_when: false
+
+    - name: Assert that secrets are encrypted at rest
+      ansible.builtin.assert:
+        that:
+          - "'Encryption Status: Enabled' in verify_k3s_enc.stdout"
+        success_msg: "Secrets chiffrés au repos"
