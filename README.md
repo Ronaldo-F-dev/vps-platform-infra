@@ -18,6 +18,9 @@ Fait partie du parcours DevOps Senior (Projet 1). K3s n'est installé qu'après 
 `firewall`, `ssh_hardening`, `accounts`, `updates`, `fail2ban`, `host_monitoring` (tous dans `ansible/site.yml`).
 Playbooks utiles : `verify.yml` (contrôles lecture seule), `patch.yml`, `backup-config.yml`.
 
+Projet 2 : rôles `helm` et `k3s` (`ansible/platform.yml`), puis `playbooks/k3s-verify.yml` et
+`playbooks/k3s-backup.yml`. Les manifests du cluster vivent dans `vps-platform-gitops`.
+
 ## Règles
 - Aucun secret dans ce dépôt.
 - Avant de modifier SSH ou le firewall : garder une seconde session SSH ouverte.
