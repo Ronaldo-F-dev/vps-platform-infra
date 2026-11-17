@@ -36,3 +36,9 @@
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
   when: k3s_version not in (k3s_installed.stdout | default(''))
+
+- name: Ensure the K3s service is enabled and running
+  ansible.builtin.systemd:
+    name: k3s
+    enabled: true
+    state: started
