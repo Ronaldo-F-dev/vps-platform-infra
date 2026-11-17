@@ -5,3 +5,8 @@ k3s_version: "v1.31.4+k3s1"
 # Script d'installation officiel : il vérifie lui-même le checksum du binaire téléchargé.
 k3s_install_script_url: "https://get.k3s.io"
 k3s_install_script_path: /usr/local/sbin/k3s-install.sh
+
+# Nom du noeud Kubernetes et droits du kubeconfig généré (lisible par root uniquement).
+k3s_config_dir: /etc/rancher/k3s
+k3s_node_name: "{{ inventory_hostname }}"
+k3s_write_kubeconfig_mode: "0600"
