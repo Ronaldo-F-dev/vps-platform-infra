@@ -20,3 +20,12 @@ une seconde session SSH ouverte.
 5. `ansible-playbook playbooks/k3s-verify.yml -K`.
 6. Rollback : K3s ne gère pas le retour arrière du datastore. Restaurer l'archive de l'étape 3
    (voir `docs/storage.md`) et réinstaller la version précédente avec le rôle.
+
+## 3. Retrait d'un addon
+- Composant packagé (Traefik, servicelb, metrics-server, local-storage) : l'ajouter à `k3s_disable`,
+  appliquer `platform.yml`, puis SUPPRIMER à la main les ressources déjà déployées (K3s ne les retire pas
+  après coup), par exemple `kubectl -n kube-system delete helmchart traefik traefik-crd`.
+- Composant installé par le dépôt GitOps (cert-manager) : `kubectl delete -f` du manifest concerné, puis
+  retirer le fichier du dépôt. Les CRD sont conservées (`keep: true`) : les supprimer explicitement si
+  le retrait est définitif, après avoir vérifié qu'aucun `Certificate` n'existe.
+- Mettre à jour `docs/ports-matrix.md` et l'ADR concerné.
