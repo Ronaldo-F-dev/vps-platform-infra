@@ -1,3 +1,7 @@
 # Version EXACTE de K3s (ADR-002). Jamais de canal flottant (stable, latest) : la plateforme doit
 # pouvoir être reconstruite à l'identique. Changer cette valeur = montée de version (voir runbook).
 k3s_version: "v1.31.4+k3s1"
+
+# Script d'installation officiel : il vérifie lui-même le checksum du binaire téléchargé.
+k3s_install_script_url: "https://get.k3s.io"
+k3s_install_script_path: /usr/local/sbin/k3s-install.sh
