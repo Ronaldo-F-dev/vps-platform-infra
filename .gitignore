@@ -7,3 +7,7 @@ vault-password*
 
 # Copies de configuration hors VPS (peuvent contenir des infos sensibles)
 backups/
+
+# Identifiants d'administration du cluster : jamais dans Git
+kubeconfig*
+k3s.yaml
