@@ -19,4 +19,7 @@
 ## Conséquences
 - Attention : Docker publie ses ports en contournant UFW. Tout conteneur avec `-p` est exposé même si le
   port n'est pas autorisé. À traiter avant d'utiliser Docker hors k3d.
-- K3s ajoutera ses propres règles réseau : vérifier la matrice des ports après son installation.
+- K3s ajoute ses propres règles iptables (DNAT pour les ports publiés par servicelb et les NodePorts) qui
+  peuvent contourner UFW comme Docker. À vérifier après installation par un scan de ports EXTERNE
+  (`nmap -p 1-65535 <ip>` depuis une autre machine) : seuls 22, 80 et 443 doivent répondre.
+  Résultat à consigner dans `ports-matrix.md` ; aucun NodePort ne doit être créé sans mise à jour de ce document.
