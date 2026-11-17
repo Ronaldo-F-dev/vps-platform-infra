@@ -2,3 +2,7 @@
 helm_version: "v3.16.3"
 helm_arch: amd64
 helm_base_url: "https://get.helm.sh"
+
+helm_archive_dir: /usr/local/src
+helm_install_dir: "/opt/helm/{{ helm_version }}"
+helm_bin: /usr/local/bin/helm
